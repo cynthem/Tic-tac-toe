@@ -42,19 +42,31 @@ h1 {
     word-spacing: 0.05em;
 }
 
+h1:hover {
+    cursor: default;
+}
+
 .player-options {
     padding-top: calc(20px + 10%);
+    width: 80%;
     display: flex;
-    width: 95%;
     justify-content: space-between;
 }
 
-button {
-    background: none;
-    border: none;
-    outline: none;
+i {
+    color: #d3eaea;
+    transition: all 300ms ease-in-out;
 }
 
-img {
-    width: 12vw;
+i:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+i:active {
+    transform: scale(1.5);
+}
+
+.hide {
+    display: none;
 }
