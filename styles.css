@@ -20,14 +20,22 @@ body {
 
 .choose-player {
     background-color: #4F6367;
+    
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
 }
 
 h1 {
     color: #d3eaea;
+    text-align: center;
 }
 
 button {
     background: none;
     border: none;
     outline: none;
+}
+
+img {
+    width: 50%;
 }
