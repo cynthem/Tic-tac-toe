@@ -1,3 +1,17 @@
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    10% { opacity: 0.9; }
+    20% { opacity: 0.8; }
+    30% { opacity: 0.7; }
+    40% { opacity: 0.6; }
+    50% { opacity: 0.5; }
+    60% { opacity: 0.4; }
+    70% { opacity: 0.3; }
+    80% { opacity: 0.2; }
+    90% { opacity: 0.1; }
+    100% { opacity: 0; }
+}
+
 *,
 *::after,
 *::before {
@@ -65,6 +79,10 @@ i:hover {
 
 i:active {
     transform: scale(1.5);
+}
+
+.fade-out {
+    animation: fadeOut 1.25s ease-in;
 }
 
 .hide {
