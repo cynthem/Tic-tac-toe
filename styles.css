@@ -107,7 +107,7 @@ i:active {
 
 .main-game {
     display: grid;
-    grid-template-rows: 20% 1fr 10%;
+    grid-template-rows: 20% 1fr 20%;
     height: 100vh;
     padding: 10px;
 }
@@ -119,6 +119,60 @@ i:active {
 
 .board-card {
     background-color: #B8D8D8;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    padding: 0 5%;
+}
+
+.gameboard {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    width: 100%;
+}
+
+.tile {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 3vw;
+    font-weight: bold;
+    border-bottom: 3px solid #FE5F55;
+    border-right: 3px solid #FE5F55;
+    color:#4F6367;
+    padding: 2.5vh 2.5vw;
+}
+
+.right {
+    border-right: none;
+}
+
+.bottom {
+    border-bottom: none;
+}
+
+.tile:hover,
+.restart:hover {
+    cursor: pointer;
+}
+
+.restart {
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.02em;
+    word-spacing: 0.05em;
+    font-size: 1.5vw;
+    padding: 8px 12px;
+    background-color: #FE5F55;
+    color: #EEF5DB;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 .footer {
@@ -126,6 +180,7 @@ i:active {
     justify-content: center;
     align-items: flex-end;
     color: #7A9E9F;
+    gap: 5px;
 }
 
 a:hover {
