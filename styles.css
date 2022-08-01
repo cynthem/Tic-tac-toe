@@ -106,10 +106,9 @@ i:active {
 /* Game Board */
 
 .main-game {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 20% 1fr 10%;
     height: 100vh;
-    justify-content: space-between;
     padding: 10px;
 }
 
@@ -118,13 +117,21 @@ i:active {
     font-size: 4vw;
 }
 
+.board-card {
+    background-color: #B8D8D8;
+}
+
 .footer {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     color: #7A9E9F;
 }
 
 a:hover {
     transform: scale(1.2);
+}
+
+.fa-github {
+    color: #4F6367;
 }
