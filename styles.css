@@ -40,7 +40,6 @@ html {
 }
 
 body {
-  margin-bottom: 80px;
   background-color: #EEF5DB;
 }
 
@@ -106,7 +105,26 @@ i:active {
 
 /* Game Board */
 
+.main-game {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    padding: 10px;
+}
+
 .tictactoe {
     color: #4F6367;
     font-size: 4vw;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #7A9E9F;
+}
+
+a:hover {
+    transform: scale(1.2);
 }
