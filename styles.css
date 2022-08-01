@@ -131,7 +131,7 @@ i:active {
 
 .gameboard {
     display: grid;
-    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    grid-template: repeat(3, clamp(50px, 100px, 150px)) / repeat(3, clamp(50px, 100px, 150px));
     width: 100%;
 }
 
@@ -139,12 +139,11 @@ i:active {
     background: none;
     border: none;
     outline: none;
-    font-size: 3vw;
+    font-size: 3.5vw;
     font-weight: bold;
     border-bottom: 3px solid #FE5F55;
     border-right: 3px solid #FE5F55;
     color:#4F6367;
-    padding: 2.5vh 2.5vw;
 }
 
 .right {
@@ -173,6 +172,13 @@ i:active {
     outline: none;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.restart:active {
+    background-color: #FE5F55;
+    -webkit-box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .footer {
