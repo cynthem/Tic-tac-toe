@@ -26,6 +26,34 @@
     100% { opacity: 1; }
 }
 
+@keyframes expand-card {
+    0% {
+        letter-spacing: -0.5em;
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes expand-card {
+    0% {
+        letter-spacing: -0.5em;
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
 *,
 *::after,
 *::before {
@@ -218,4 +246,7 @@ a:hover {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     letter-spacing: 0.02em;
     word-spacing: 0.05em;
+    z-index: 1;
+    -webkit-animation: expand-card 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: expand-card 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
