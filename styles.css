@@ -109,6 +109,15 @@ body {
   background-color: #EEF5DB;
 }
 
+.hide {
+    display: none;
+}
+
+.show {
+    animation: fadeIn 1s linear;
+}
+
+
 /* Choose-player card */
 
 .choose-player {
@@ -172,15 +181,11 @@ i:active {
     animation: fadeOut 1.25s ease-in;
 }
 
-.hide {
-    display: none;
-}
-
 
 /* Game Board */
 
 .main-game {
-    display: grid;
+    display: none;
     grid-template-rows: 20% 1fr 20%;
     height: 100vh;
     padding: 10px;
@@ -201,6 +206,14 @@ i:active {
     border-radius: 15px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     padding: 0 5%;
+}
+
+.current-player {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 2vw;
+    color: #4F6367;
 }
 
 .gameboard {
