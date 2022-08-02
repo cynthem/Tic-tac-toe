@@ -196,3 +196,26 @@ a:hover {
 .fa-github {
     color: #4F6367;
 }
+
+
+/* Winner's card */
+
+.winner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4F6367;
+    padding: calc(10px + 3%);
+    border-radius: 15px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.win {
+    color: #d3eaea;
+    text-align: center;
+    font-size: 3vw;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.02em;
+    word-spacing: 0.05em;
+}
