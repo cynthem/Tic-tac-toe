@@ -1,12 +1,25 @@
 @keyframes enter {
     from {
-       transform: scale(0);
-       transform: translate(-50%, -50%);
+        transform: scale(0);
+        transform: translate(-50%, -50%);
     }
     to {
         transform: scale(1);
         transform: translate(-50%, -50%);
     }
+}
+
+@keyframes exit {
+    0% { 
+        transform: scale(1);
+        transform: translate(-50%, -50%);
+    }
+    50% { 
+        transform: scaleX(1.2);
+    }
+    100% { 
+        transform: scale(0);
+    } 
 }
 
 @keyframes fadeOut {
@@ -111,13 +124,14 @@ body {
     padding: calc(10px + 3%);
     border-radius: 15px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.enter {
     animation: enter 1s linear forwards;
 }
 
-.implode {
-    z-index: 1;
-    -webkit-animation: implode-card 0.8s linear;
-	        animation: implode-card 0.8s linear;
+.exit {
+    animation: exit 1s linear;
 }
 
 h1 {
