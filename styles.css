@@ -1,3 +1,14 @@
+@keyframes enter {
+    from {
+       transform: scale(0);
+       transform: translate(-50%, -50%);
+    }
+    to {
+        transform: scale(1);
+        transform: translate(-50%, -50%);
+    }
+}
+
 @keyframes fadeOut {
     0% { opacity: 1; }
     10% { opacity: 0.9; }
@@ -54,6 +65,20 @@
     }
 }
 
+@keyframes implode-card {
+    0% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+    100% {
+        letter-spacing: -0.5em;
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+}
+
 *,
 *::after,
 *::before {
@@ -86,6 +111,13 @@ body {
     padding: calc(10px + 3%);
     border-radius: 15px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    animation: enter 1s linear forwards;
+}
+
+.implode {
+    z-index: 1;
+    -webkit-animation: implode-card 0.8s linear;
+	        animation: implode-card 0.8s linear;
 }
 
 h1 {
