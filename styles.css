@@ -220,6 +220,11 @@ i:active {
     word-spacing: 0.05em;
 }
 
+.underline {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 .gameboard {
     display: grid;
     grid-template: repeat(3, clamp(50px, 100px, 150px)) / repeat(3, clamp(50px, 100px, 150px));
