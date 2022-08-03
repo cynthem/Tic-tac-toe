@@ -5,8 +5,8 @@ const selectPlayer = (() => {
     const gameScreen = document.querySelector('.main-game');
 
     humanPlayer.addEventListener('click', () => {
-        gameBoard.setPlayer(1, 'player1');
-        gameBoard.setPlayer(2, 'player2');
+        gameBoard.setPlayerType(1, 'human');
+        gameBoard.setPlayerType(2, 'human');
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
         window.setTimeout(() => choiceScreen.style.display = 'none', 1001);
@@ -15,8 +15,8 @@ const selectPlayer = (() => {
         window.setTimeout(() => gameScreen.classList.remove('show'), 2002);
     })
     computerPlayer.addEventListener('click', () => {
-        gameBoard.setPlayer(1, 'player1');
-        gameBoard.setPlayer(2, 'computer');
+        gameBoard.setPlayerType(1, 'human');
+        gameBoard.setPlayerType(2, 'computer');
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
         window.setTimeout(() => choiceScreen.style.display = 'none', 1001);
@@ -32,8 +32,8 @@ const gameBoard = (() => {
     const xTotal = [];
     const oTotal = [];
     let isItDraw = null;
-    const playerOne = Player('X', false, 'player1');
-    const playerTwo = Player('O', false, 'player2');
+    const playerOne = Player('X', false, 'human');
+    const playerTwo = Player('O', false, 'human');
 
     const getPlayer = (playerNumber) => {
         return playerNumber === 1 ? playerOne : playerTwo;
@@ -42,34 +42,50 @@ const gameBoard = (() => {
         return playerNumber === 1 ? playerOne.updatePlayerType(playerType) : playerTwo.updatePlayerType(playerType);
     }
     const getCurrentPlayer = () => {
-        return playerOne.getCurrentPlayer() === true ? playerOne : playerTwo;
+        return playerOne.getCurrentlyPlaying() === true ? playerOne : playerTwo;
     }
     const setCurrentPlayer = () => {
-        if (playerOne.getCurrentPlayer() === false && playerTwo.getCurrentPlayer() === false) {
-            playerOne.updateCurrentPlayer(true);
+        if (playerOne.getCurrentlyPlaying() === false && playerTwo.getCurrentlyPlaying() === false) {
+            playerOne.updateCurrentlyPlaying(true);
             return playerOne;
         }
-        if (playerOne.getCurrentPlayer() === true) {
-            playerOne.updateCurrentPlayer(false);
-            playerTwo.updateCurrentPlayer(true);
+        if (playerOne.getCurrentlyPlaying() === true) {
+            playerOne.updateCurrentlyPlaying(false);
+            playerTwo.updateCurrentlyPlaying(true);
             return playerTwo;
-        } else if (playerTwo.getCurrentPlayer() === true) {
-            playerTwo.updateCurrentPlayer(false);
-            playerOne.updateCurrentPlayer(true);
+        } else if (playerTwo.getCurrentlyPlaying() === true) {
+            playerTwo.updateCurrentlyPlaying(false);
+            playerOne.updateCurrentlyPlaying(true);
             return playerOne;
         }
     }
-
+    const isComputerCurrentPlayer = () => {
+        if (getCurrentPlayer().getPlayerType() !== 'human' &&
+            isItDraw === null &&
+            boardArray.some(el => el === null)) {
+            game.removeEventListener('click', gameBoard.playGame);
+            window.setTimeout(() => playGame(null), 500);
+            if (playerTwo.getPlayerType() !== 'human') return;
+            window.setTimeout(() => game.addEventListener('click', gameBoard.playGame), 1000);
+        }
+    }
+    const setComputerLetter = (randomMove) => {
+        if (randomMove === undefined) return;
+        const gameTiles = document.querySelectorAll('.tile');
+        gameTiles[randomMove].textContent = getCurrentPlayer().getLetter();
+        boardArray[randomMove] = getCurrentPlayer().getLetter();
+        oTotal.push(Number(randomMove));
+    }
 })
 
 const Player = ((letter, currentlyPlaying, playerType) => {
     const getLetter = () => {
         return letter;
     }
-    const getCurrentPlayer = () => {
+    const getCurrentlyPlaying = () => {
         return currentlyPlaying;
     }
-    const updateCurrentPlayer = (isPlaying) => {
+    const updateCurrentlyPlaying = (isPlaying) => {
         return currentlyPlaying = isPlaying;
     }
     const getPlayerType = () => {
@@ -80,8 +96,8 @@ const Player = ((letter, currentlyPlaying, playerType) => {
     }
     return {
         getLetter,
-        getCurrentPlayer,
-        updateCurrentPlayer,
+        getCurrentlyPlaying,
+        updateCurrentlyPlaying,
         getPlayerType,
         updatePlayerType
     };
@@ -99,7 +115,7 @@ const computerMoves = (() => {
         return Object.freeze({moves, randomMove});
     }
     const computerMove = () => {
-        gameBoard.setComputerMove(availableMoves().randomMove);
+        gameBoard.setComputerLetter(availableMoves().randomMove);
     }
     return {computerMove};
 })();
