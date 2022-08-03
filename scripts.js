@@ -87,6 +87,19 @@ const Player = ((letter, currentlyPlaying, playerType) => {
     };
 })
 
-const computerPlay = (() => {
-    
-})
+const computerMoves = (() => {
+    const availableMoves = () => {
+        const moves = [];
+        gameBoard.boardArray.filter((el, i) => {
+            if (el === null) {
+                moves.push(i);
+            }
+        })
+        const randomMove = moves[Math.floor(Math.random() * moves.length)];
+        return Object.freeze({moves, randomMove});
+    }
+    const computerMove = () => {
+        gameBoard.setComputerMove(availableMoves().randomMove);
+    }
+    return {computerMove};
+})();
