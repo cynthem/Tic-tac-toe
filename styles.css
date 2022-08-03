@@ -214,6 +214,9 @@ i:active {
     justify-content: space-between;
     font-size: 2vw;
     color: #4F6367;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.02em;
+    word-spacing: 0.05em;
 }
 
 .gameboard {
