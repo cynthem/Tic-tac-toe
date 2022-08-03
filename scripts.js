@@ -28,12 +28,38 @@ const selectPlayer = (() => {
 
 const gameBoard = (() => {
     const board = document.querySelector('.gameboard');
+    const boardArray = Array(9).fill(null);
+    const xTotal = [];
+    const oTotal = [];
+    let isItDraw = null;
     const playerOne = Player('X', false, 'player1');
     const playerTwo = Player('O', false, 'player2');
 
-    setPlayer = (playerNumber, playerType) => {
-        return playerNumber === 1 ? playerOne.updateType(playerType) : playerTwo.updateType(playerType);
+    const getPlayer = (playerNumber) => {
+        return playerNumber === 1 ? playerOne : playerTwo;
     }
+    const setPlayerType = (playerNumber, playerType) => {
+        return playerNumber === 1 ? playerOne.updatePlayerType(playerType) : playerTwo.updatePlayerType(playerType);
+    }
+    const getCurrentPlayer = () => {
+        return playerOne.getCurrentPlayer() === true ? playerOne : playerTwo;
+    }
+    const setCurrentPlayer = () => {
+        if (playerOne.getCurrentPlayer() === false && playerTwo.getCurrentPlayer() === false) {
+            playerOne.updateCurrentPlayer(true);
+            return playerOne;
+        }
+        if (playerOne.getCurrentPlayer() === true) {
+            playerOne.updateCurrentPlayer(false);
+            playerTwo.updateCurrentPlayer(true);
+            return playerTwo;
+        } else if (playerTwo.getCurrentPlayer() === true) {
+            playerTwo.updateCurrentPlayer(false);
+            playerOne.updateCurrentPlayer(true);
+            return playerOne;
+        }
+    }
+
 })
 
 const Player = ((letter, currentlyPlaying, playerType) => {
@@ -46,17 +72,21 @@ const Player = ((letter, currentlyPlaying, playerType) => {
     const updateCurrentPlayer = (isPlaying) => {
         return currentlyPlaying = isPlaying;
     }
-    const getType = () => {
+    const getPlayerType = () => {
         return playerType;
     }
-    const updateType = (type) => {
+    const updatePlayerType = (type) => {
         return playerType = type;
     }
     return {
         getLetter,
         getCurrentPlayer,
         updateCurrentPlayer,
-        getType,
-        updateType
+        getPlayerType,
+        updatePlayerType
     };
+})
+
+const computerPlay = (() => {
+    
 })
