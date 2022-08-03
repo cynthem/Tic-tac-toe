@@ -140,7 +140,11 @@ const gameBoard = (() => {
         }
     }
     const gameOver = (winner) => {
-        //winner === false ? updateBoard.? : updateBoard.?;
+        if (winner !== false) {
+            window.setTimeout(() => {
+                //updateBoard.?
+            })
+        } else {}
         window.setTimeout(() => {
             boardArray.fill(null);
             xTotal.length = 0;
@@ -148,12 +152,18 @@ const gameBoard = (() => {
             isItDraw = null;
             updateBoard.clearBoard();
         }, 2000);
-        if (winner !== false) {
-            
-        }
-
     }
-})
+    return Object.freeze({
+        boardArray,
+        getPlayer,
+        setPlayerType,
+        getCurrentPlayer,
+        setCurrentPlayer,
+        isComputerCurrentPlayer,
+        setComputerLetter,
+        setLetterPlayed
+    });
+})();
 
 const Player = ((letter, currentlyPlaying, playerType) => {
     const getLetter = () => {
