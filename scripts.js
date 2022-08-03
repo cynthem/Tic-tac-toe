@@ -5,16 +5,11 @@ const selectPlayer = (() => {
     const gameScreen = document.querySelector('.main-game');
 
     humanPlayer.addEventListener('click', () => {
-        gameBoard.setPlayerType(1, 'human');
-        gameBoard.setPlayerType(2, 'human');
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
-        window.setTimeout(() => {
-            choiceScreen.style.display = 'none';
-            gameScreen.style.display = 'grid';
-            gameScreen.classList.add('show');
-        }, 1000);
-        window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
+        gameBoard.setPlayerType(1, 'human');
+        gameBoard.setPlayerType(2, 'human');
+        updateBoard.displayBoard();
     })
     computerPlayer.addEventListener('click', () => {
         gameBoard.setPlayerType(1, 'human');
@@ -206,3 +201,23 @@ const computerMoves = (() => {
     }
     return {computerMove};
 })();
+
+const updateBoard = (() => {
+    const choiceScreen = document.querySelector('.choose-player');
+    const gameScreen = document.querySelector('.main-game');
+    const game = document.querySelector('.gameboard');
+
+    const displayBoard = () => {
+        window.setTimeout(() => {
+            choiceScreen.style.display = 'none';
+            gameScreen.style.display = 'grid';
+            gameScreen.classList.add('show');
+            gameBoard.getCurrentPlayer();
+            underlinePlayer();
+            game.addEventListener('click', gameBoard.playGame);
+            window.setTimeout(() => gameBoard.isComputerCurrentPlayer(), 500);
+        }, 1000);
+        window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
+    }
+
+})
