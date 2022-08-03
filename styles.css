@@ -246,28 +246,6 @@ i:active {
     cursor: pointer;
 }
 
-.restart {
-    text-align: center;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    letter-spacing: 0.02em;
-    word-spacing: 0.05em;
-    font-size: 1.5vw;
-    padding: 8px 12px;
-    background-color: #FE5F55;
-    color: #EEF5DB;
-    border: none;
-    outline: none;
-    border-radius: 10px;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-}
-
-.restart:active {
-    background-color: #FE5F55;
-    -webkit-box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
-}
-
 .footer {
     display: flex;
     justify-content: center;
@@ -308,4 +286,26 @@ a:hover {
     z-index: 1;
     -webkit-animation: expand-card 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: expand-card 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.restart {
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.02em;
+    word-spacing: 0.05em;
+    font-size: 1.5vw;
+    padding: 8px 12px;
+    background-color: #FE5F55;
+    color: #EEF5DB;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.restart:active {
+    background-color: #FE5F55;
+    -webkit-box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 2px 3px 8px rgba(0, 0, 0, 0.3);
 }
