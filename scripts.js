@@ -7,15 +7,22 @@ const selectPlayer = (() => {
     humanPlayer.addEventListener('click', () => {
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
-        gameBoard.setPlayerType(1, 'human');
-        gameBoard.setPlayerType(2, 'human');
-        updateBoard.displayBoard();
+        //gameBoard.setPlayerType(1, 'human');
+        //gameBoard.setPlayerType(2, 'human');
+        //updateBoard.displayBoard();
+        window.setTimeout(() => {
+            choiceScreen.style.display = 'none';
+            gameScreen.style.display = 'grid';
+            gameScreen.classList.add('show');
+        }, 1000);
+        window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
     })
     computerPlayer.addEventListener('click', () => {
-        gameBoard.setPlayerType(1, 'human');
-        gameBoard.setPlayerType(2, 'computer');
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
+        //gameBoard.setPlayerType(1, 'human');
+        //gameBoard.setPlayerType(2, 'computer');
+        //updateBoard.displayBoard();
         window.setTimeout(() => {
             choiceScreen.style.display = 'none';
             gameScreen.style.display = 'grid';
@@ -63,9 +70,10 @@ const gameBoard = (() => {
             isItDraw === null &&
             boardArray.some(el => el === null)) {
             game.removeEventListener('click', gameBoard.playGame);
-            window.setTimeout(() => playGame(null), 500);
-            if (playerTwo.getPlayerType() !== 'human') return;
-            window.setTimeout(() => game.addEventListener('click', gameBoard.playGame), 1000);
+            window.setTimeout(() => {
+                playGame(null);
+                game.addEventListener('click', gameBoard.playGame);
+            }, 500);
         }
     }
     const setComputerLetter = (randomMove) => {
@@ -155,8 +163,7 @@ const gameBoard = (() => {
         getCurrentPlayer,
         setCurrentPlayer,
         isComputerCurrentPlayer,
-        setComputerLetter,
-        setLetterPlayed
+        setComputerLetter
     });
 })();
 
@@ -206,18 +213,28 @@ const updateBoard = (() => {
     const choiceScreen = document.querySelector('.choose-player');
     const gameScreen = document.querySelector('.main-game');
     const game = document.querySelector('.gameboard');
+    const player1 = document.querySelector('.player1');
+    const player2 = document.querySelector('.player2');
 
     const displayBoard = () => {
         window.setTimeout(() => {
             choiceScreen.style.display = 'none';
             gameScreen.style.display = 'grid';
             gameScreen.classList.add('show');
-            gameBoard.getCurrentPlayer();
+            gameBoard.setCurrentPlayer();
             underlinePlayer();
             game.addEventListener('click', gameBoard.playGame);
-            window.setTimeout(() => gameBoard.isComputerCurrentPlayer(), 500);
+            gameBoard.isComputerCurrentPlayer();
         }, 1000);
         window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
     }
-
+    const underlinePlayer = () => {
+        if (gameBoard.getCurrentPlayer().getLetter() === 'X') {
+            player1.classList.add('underline');
+            player2.classList.remove('underline');
+        } else {
+            player1.classList.remove('underline');
+            player2.classList.add('underline');
+        }
+    }
 })
