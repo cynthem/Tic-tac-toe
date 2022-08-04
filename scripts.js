@@ -208,7 +208,7 @@ const computerMoves = (() => {
     const computerMove = () => {
         gameBoard.setComputerLetter(availableMoves().randomMove);
     }
-    return {computerMove};
+    return { computerMove };
 })();
 
 const updateBoard = (() => {
@@ -292,5 +292,12 @@ const updateBoard = (() => {
             choiceScreen.style.display = 'flex';
         }, 1000);
     }
-    return {}
+    return {
+        displayBoard,
+        underlinePlayer,
+        resultIsDraw,
+        resultIsWin,
+        showResults,
+        clearBoard
+    };
 })();
