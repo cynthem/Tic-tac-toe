@@ -81,7 +81,7 @@ const gameBoard = (() => {
         const gameTiles = document.querySelectorAll('.tile');
         gameTiles[randomMove].textContent = getCurrentPlayer().getLetter();
         boardArray[randomMove] = getCurrentPlayer().getLetter();
-        oTotal.push(Number(randomMove));
+        getCurrentPlayer().getLetter() === 'O' ? oTotal.push(Number(randomMove)) : xTotal.push(Number(randomMove));
     }
     const setLetterPlayed = (field) => {
         const gameIndex = field.target.dataset.index;
@@ -142,19 +142,21 @@ const gameBoard = (() => {
             return gameOver(false);
         }
     }
-    const gameOver = (winner) => {
-        if (winner !== false) {
-            window.setTimeout(() => {
-                //updateBoard.?
-            })
-        } else {}
+    const gameOver = (winner, fieldLetters) => {
+        if (winner === false) {
+            updateBoard.resultIsDraw();
+            window.setTimeout(() => updateBoard.showResults(winner), 1000);
+        } else {
+            updateBoard.resultIsWin(fieldLetters);
+            window.setTimeout(() => updateBoard.showResults(winner), 1000);
+        }
         window.setTimeout(() => {
             boardArray.fill(null);
             xTotal.length = 0;
             oTotal.length = 0;
             isItDraw = null;
             updateBoard.clearBoard();
-        }, 2000);
+        }, 1000);
     }
     return Object.freeze({
         boardArray,
@@ -215,6 +217,7 @@ const updateBoard = (() => {
     const game = document.querySelector('.gameboard');
     const player1 = document.querySelector('.player1');
     const player2 = document.querySelector('.player2');
+    const gameTiles = document.querySelectorAll('.tile');
 
     const displayBoard = () => {
         window.setTimeout(() => {
@@ -236,5 +239,29 @@ const updateBoard = (() => {
             player1.classList.remove('underline');
             player2.classList.add('underline');
         }
+    }
+    const resultIsDraw = () => {
+        gameTiles.forEach(el => {
+            el.classList.add('draw-result');
+            window.setTimeout(() => el.classList.remove('draw-result'), 1000);
+        })
+    }
+    const resultIsWin = (fieldLetters) => {
+        gameTiles.forEach(el => {
+            if (fieldLetters.includes(Number(el.dataset.index))) {
+                el.classList.add('win-result');
+                window.setTimeout(() => el.classList.remove('win-result'), 1000);
+            }
+        })
+    }
+    const showResults = (winner) => {
+
+    }
+    const clearBoard = () => {
+        gameScreen.classList.add('fade-out');
+        window.setTimeout(() => {
+            gameScreen.style.display = 'none';
+            gameScreen.classList.remove('fade-out');
+        }, 1250);
     }
 })
