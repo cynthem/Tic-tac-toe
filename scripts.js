@@ -228,9 +228,9 @@ const updateBoard = (() => {
             gameScreen.style.display = 'grid';
             gameScreen.classList.add('show');
             gameBoard.setCurrentPlayer();
+            gameBoard.isComputerCurrentPlayer();
             underlinePlayer();
             game.addEventListener('click', gameBoard.playGame);
-            gameBoard.isComputerCurrentPlayer();
         }, 1000);
         window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
     }
@@ -246,6 +246,7 @@ const updateBoard = (() => {
     const resultIsDraw = () => {
         gameTiles.forEach(el => {
             el.classList.add('draw-result');
+            game.removeEventListener('click', gameBoard.playGame);
             window.setTimeout(() => el.classList.remove('draw-result'), 1000);
         })
     }
@@ -253,21 +254,23 @@ const updateBoard = (() => {
         gameTiles.forEach(el => {
             if (fieldLetters.includes(Number(el.dataset.index))) {
                 el.classList.add('win-result');
+                game.removeEventListener('click', gameBoard.playGame);
                 window.setTimeout(() => el.classList.remove('win-result'), 1000);
             }
         })
     }
     const showResults = (winner) => {
-        if (winner === playerOne) {
+        if (winner === false) {
+            winnerText.textContent = 'No winners this time.';
+        } else if (winner.getLetter() === 'X') {
             winnerText.textContent = 'Player 1 wins!';
-        } else if (winner === playerTwo) {
+        } else if (winner.getLetter() === 'O') {
             winnerText.textContent = 'Player 2 wins!';
-        } else if (winner === false) {
-            winnerText.textContent = 'No one wins.';
         }
         winnerCard.classList.remove('hide');
         winnerCard.classList.add('enter');
-        restartBtn.addEventListener('click', )
+        restartBtn.addEventListener('click', restartGame);
+        //window.setTimeout(() => winnerCard.classList.remove('enter'), 1000);
     }
     const clearBoard = () => {
         gameScreen.classList.add('fade-out');
@@ -276,7 +279,18 @@ const updateBoard = (() => {
             gameScreen.classList.remove('fade-out');
         }, 1250);
     }
-})
-
-    const winnerCard = document.querySelector('.winner');
-    const winnerText = document.querySelector('.win');
+    const restartGame = () => {
+        //restartBtn.removeEventListener('click', restartGame);
+        winnerCard.classList.remove('enter');
+        winnerCard.classList.add('exit');
+        window.setTimeout(() => {
+            winnerCard.classList.add('hide');
+            winnerCard.classList.remove('exit');
+            winnerText.textContent = '';
+            choiceScreen.classList.remove('exit');
+            choiceScreen.classList.add('enter');
+            choiceScreen.style.display = 'flex';
+        }, 1000);
+    }
+    return {}
+})();
