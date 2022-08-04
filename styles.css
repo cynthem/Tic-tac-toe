@@ -196,9 +196,19 @@ i:active {
     word-spacing: 0.05em;
 }
 
+.player1,
+.player2 {
+    padding: 5px;
+}
+
 .underline {
-    text-decoration: underline;
-    font-weight: bold;
+    border: 2px solid #FE5F55;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.player1:hover,
+.player2:hover {
+    cursor: default;
 }
 
 .gameboard {
@@ -245,6 +255,10 @@ i:active {
     align-items: flex-end;
     color: #7A9E9F;
     gap: 5px;
+}
+
+.footer > p:hover {
+    cursor: default;
 }
 
 a:hover {
