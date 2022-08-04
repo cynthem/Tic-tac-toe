@@ -218,6 +218,9 @@ const updateBoard = (() => {
     const player1 = document.querySelector('.player1');
     const player2 = document.querySelector('.player2');
     const gameTiles = document.querySelectorAll('.tile');
+    const winnerCard = document.querySelector('.winner');
+    const winnerText = document.querySelector('.win');
+    const restartBtn = document.querySelector('.restart');
 
     const displayBoard = () => {
         window.setTimeout(() => {
@@ -255,7 +258,16 @@ const updateBoard = (() => {
         })
     }
     const showResults = (winner) => {
-
+        if (winner === playerOne) {
+            winnerText.textContent = 'Player 1 wins!';
+        } else if (winner === playerTwo) {
+            winnerText.textContent = 'Player 2 wins!';
+        } else if (winner === false) {
+            winnerText.textContent = 'No one wins.';
+        }
+        winnerCard.classList.remove('hide');
+        winnerCard.classList.add('enter');
+        restartBtn.addEventListener('click', )
     }
     const clearBoard = () => {
         gameScreen.classList.add('fade-out');
@@ -265,3 +277,6 @@ const updateBoard = (() => {
         }, 1250);
     }
 })
+
+    const winnerCard = document.querySelector('.winner');
+    const winnerText = document.querySelector('.win');
