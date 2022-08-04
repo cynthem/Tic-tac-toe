@@ -92,6 +92,15 @@
     }
 }
 
+@keyframes draw-result {
+    0% { background-color: none; }
+    20% { background-color: #577172; }
+    40% { background-color: #3b4848; }
+    60% { background-color: #222626; }
+    80% { background-color: #3b4848; }
+    100% { background-color: #577172; }
+}
+
 *,
 *::after,
 *::before {
@@ -115,6 +124,10 @@ body {
 
 .show {
     animation: fadeIn 1s linear;
+}
+
+.draw-result {
+    animation: draw-result 1s linear;
 }
 
 
