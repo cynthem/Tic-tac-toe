@@ -101,6 +101,15 @@
     100% { background-color: #577172; }
 }
 
+@keyframes win-result {
+    0% { background-color: none; }
+    20% { background-color: #9ec3c5; }
+    40% { background-color: #cce2e3; }
+    60% { background-color: rgb(247, 247, 247); }
+    80% { background-color: #cce2e3; }
+    100% { background-color: #9ec3c5; }
+}
+
 *,
 *::after,
 *::before {
@@ -124,10 +133,6 @@ body {
 
 .show {
     animation: fadeIn 1s linear;
-}
-
-.draw-result {
-    animation: draw-result 1s linear;
 }
 
 
@@ -266,6 +271,14 @@ i:active {
 .tile:hover,
 .restart:hover {
     cursor: pointer;
+}
+
+.draw-result {
+    animation: draw-result 1s linear;
+}
+
+.win-result {
+    animation: win-result 1s linear;
 }
 
 .footer {
