@@ -66,6 +66,7 @@ const computerMoves = (() => {
 
 const gameBoard = (() => {
     const gameTiles = document.querySelectorAll('.tile');
+    const game = document.querySelector('.gameboard');
     const boardArray = Array(9).fill(null);
     const playerOne = Player('X', false, 'human');
     const playerTwo = Player('O', false, 'human');
@@ -127,7 +128,7 @@ const gameBoard = (() => {
     }
     const setLetterPlayed = (field) => {
         const gameIndex = field.target.dataset.index;
-        if (field.target === board) return null;
+        if (field.target === game) return null;
         if (boardArray[gameIndex] !== null) return null;
         boardArray[gameIndex] = getCurrentPlayer().getLetter();
         getCurrentPlayer().getLetter() === 'X' ? xTotal.push(Number(gameIndex)) : oTotal.push(Number(gameIndex));
@@ -203,7 +204,6 @@ const gameBoard = (() => {
 const updateBoard = (() => {
     const choiceScreen = document.querySelector('.choose-player');
     const gameScreen = document.querySelector('.main-game');
-    const game = document.querySelector('.gameboard');
     const player1 = document.querySelector('.player1');
     const player2 = document.querySelector('.player2');
     const gameTiles = document.querySelectorAll('.tile');
