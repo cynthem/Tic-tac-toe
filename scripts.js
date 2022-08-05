@@ -176,10 +176,10 @@ const gameBoard = (() => {
     const gameOver = (winner, fieldLetters) => {
         if (winner === false) {
             updateBoard.resultIsDraw();
-            window.setTimeout(() => updateBoard.showResults(winner), 1000);
+            window.setTimeout(() => updateBoard.showResults(winner), 2000);
         } else {
             updateBoard.resultIsWin(fieldLetters);
-            window.setTimeout(() => updateBoard.showResults(winner), 1000);
+            window.setTimeout(() => updateBoard.showResults(winner), 2000);
         }
         window.setTimeout(() => {
             boardArray.fill(null);
@@ -256,24 +256,23 @@ const updateBoard = (() => {
         } else if (winner.getLetter() === 'O') {
             winnerText.textContent = 'Player 2 wins!';
         }
-        winnerCard.classList.remove('hide');
-        winnerCard.classList.add('enter');
+        winnerCard.classList.add('show');
+        winnerCard.style.display = 'flex';
         restartBtn.addEventListener('click', restartGame);
-        // might be okay below: window.setTimeout(() => winnerCard.classList.remove('enter'), 1000);
     }
     const clearBoard = () => {
         gameScreen.classList.add('fade-out');
         window.setTimeout(() => {
             gameScreen.style.display = 'none';
             gameScreen.classList.remove('fade-out');
+            gameTiles.forEach(el => el.textContent = '');
         }, 1000);
     }
     const restartGame = () => {
-        // needed?: restartBtn.removeEventListener('click', restartGame);
-        winnerCard.classList.remove('enter');
+        winnerCard.classList.remove('show');
         winnerCard.classList.add('exit');
         window.setTimeout(() => {
-            winnerCard.classList.add('hide');
+            winnerCard.style.display = 'none';
             winnerCard.classList.remove('exit');
             winnerText.textContent = '';
             choiceScreen.classList.remove('exit');
