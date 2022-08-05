@@ -2,50 +2,81 @@ const selectPlayer = (() => {
     const humanPlayer = document.querySelector('.fa-person');
     const computerPlayer = document.querySelector('.fa-display');
     const choiceScreen = document.querySelector('.choose-player');
-    const gameScreen = document.querySelector('.main-game');
 
     humanPlayer.addEventListener('click', () => {
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
-        //gameBoard.setPlayerType(1, 'human');
-        //gameBoard.setPlayerType(2, 'human');
-        //updateBoard.displayBoard();
-        window.setTimeout(() => {
-            choiceScreen.style.display = 'none';
-            gameScreen.style.display = 'grid';
-            gameScreen.classList.add('show');
-        }, 1000);
-        window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
+        gameBoard.setPlayerType(1, 'human');
+        gameBoard.setPlayerType(2, 'human');
+        updateBoard.displayBoard(); 
     })
     computerPlayer.addEventListener('click', () => {
         choiceScreen.classList.remove('enter');
         choiceScreen.classList.add('exit');
-        //gameBoard.setPlayerType(1, 'human');
-        //gameBoard.setPlayerType(2, 'computer');
-        //updateBoard.displayBoard();
-        window.setTimeout(() => {
-            choiceScreen.style.display = 'none';
-            gameScreen.style.display = 'grid';
-            gameScreen.classList.add('show');
-        }, 1000);
-        window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
+        gameBoard.setPlayerType(1, 'human');
+        gameBoard.setPlayerType(2, 'computer');
+        updateBoard.displayBoard();
     })
 })();
 
+const Player = (letter, currentlyPlaying, playerType) => {
+    const getLetter = () => {
+        return letter;
+    }
+    const getCurrentlyPlaying = () => {
+        return currentlyPlaying;
+    }
+    const updateCurrentlyPlaying = (isPlaying) => {
+        return currentlyPlaying = isPlaying;
+    }
+    const getPlayerType = () => {
+        return playerType;
+    }
+    const updatePlayerType = (type) => {
+        return playerType = type;
+    }
+    return {
+        getLetter,
+        getCurrentlyPlaying,
+        updateCurrentlyPlaying,
+        getPlayerType,
+        updatePlayerType
+    };
+}
+
+const computerMoves = (() => {
+    const availableMoves = () => {
+        const moves = [];
+        gameBoard.boardArray.filter((el, i) => {
+            if (el === null) {
+                moves.push(i);
+            }
+        })
+        const randomMove = moves[Math.floor(Math.random() * moves.length)];
+        return Object.freeze({
+            moves, 
+            randomMove
+        });
+    }
+    const computerMove = () => {
+        gameBoard.setComputerLetter(availableMoves().randomMove);
+    }
+    return { computerMove };
+})();
+
 const gameBoard = (() => {
-    const board = document.querySelector('.gameboard');
+    const gameTiles = document.querySelectorAll('.tile');
     const boardArray = Array(9).fill(null);
+    const playerOne = Player('X', false, 'human');
+    const playerTwo = Player('O', false, 'human');
     const xTotal = [];
     const oTotal = [];
     let isItDraw = null;
-    const playerOne = Player('X', false, 'human');
-    const playerTwo = Player('O', false, 'human');
-
-    const getPlayer = (playerNumber) => {
-        return playerNumber === 1 ? playerOne : playerTwo;
-    }
     const setPlayerType = (playerNumber, playerType) => {
         return playerNumber === 1 ? playerOne.updatePlayerType(playerType) : playerTwo.updatePlayerType(playerType);
+    }
+    const getPlayer = (playerNumber) => {
+        return playerNumber === 1 ? playerOne : playerTwo;
     }
     const getCurrentPlayer = () => {
         return playerOne.getCurrentlyPlaying() === true ? playerOne : playerTwo;
@@ -65,20 +96,31 @@ const gameBoard = (() => {
             return playerOne;
         }
     }
+    const playGame = (field) => {
+        if (field === null) {
+            computerMoves.computerMove();
+        } else {
+            if (setLetterPlayed(field) === null) return;
+        }
+        determineWin();
+        if (isItDraw !== false) determineDraw();
+        setCurrentPlayer();
+        isComputerCurrentPlayer();
+        if (isItDraw === null) updateBoard.underlinePlayer();
+    }
     const isComputerCurrentPlayer = () => {
         if (getCurrentPlayer().getPlayerType() !== 'human' &&
             isItDraw === null &&
             boardArray.some(el => el === null)) {
-            game.removeEventListener('click', gameBoard.playGame);
+            gameTiles.forEach(el => el.removeEventListener('click', gameBoard.playGame));
             window.setTimeout(() => {
                 playGame(null);
-                game.addEventListener('click', gameBoard.playGame);
+                gameTiles.forEach(el => el.addEventListener('click', gameBoard.playGame));
             }, 500);
         }
     }
     const setComputerLetter = (randomMove) => {
         if (randomMove === undefined) return;
-        const gameTiles = document.querySelectorAll('.tile');
         gameTiles[randomMove].textContent = getCurrentPlayer().getLetter();
         boardArray[randomMove] = getCurrentPlayer().getLetter();
         getCurrentPlayer().getLetter() === 'O' ? oTotal.push(Number(randomMove)) : xTotal.push(Number(randomMove));
@@ -91,17 +133,11 @@ const gameBoard = (() => {
         getCurrentPlayer().getLetter() === 'X' ? xTotal.push(Number(gameIndex)) : oTotal.push(Number(gameIndex));
         field.target.textContent = getCurrentPlayer().getLetter();
     }
-    const playGame = (field) => {
-        if (field === null) {
-            computerMoves.computerMove();
-        } else {
-            if (setLetterPlayed(field) === null) return;
+    const determineDraw = () => {
+        if (!boardArray.some(el => el === null)) {
+            isItDraw = true;
+            return gameOver(false);
         }
-        determineWin();
-        if (isItDraw !== false) determineDraw();
-        setCurrentPlayer();
-        isComputerCurrentPlayer();
-        if (isItDraw === null) updateBoard.underlinePlayer();
     }
     const determineWin = () => {
         const winningMoves = [
@@ -128,19 +164,13 @@ const gameBoard = (() => {
                 }
                 if (oTotal.includes(num)) {
                     oCount.push(num);
-                    if (xCount.length === 3) {
+                    if (oCount.length === 3) {
                         isItDraw = false;
                         return gameOver(playerTwo, oCount);
                     }
                 }
             })
         })
-    }
-    const determineDraw = () => {
-        if (!boardArray.some(el => el === null)) {
-            isItDraw = true;
-            return gameOver(false);
-        }
     }
     const gameOver = (winner, fieldLetters) => {
         if (winner === false) {
@@ -164,51 +194,10 @@ const gameBoard = (() => {
         setPlayerType,
         getCurrentPlayer,
         setCurrentPlayer,
+        playGame,
         isComputerCurrentPlayer,
         setComputerLetter
     });
-})();
-
-const Player = ((letter, currentlyPlaying, playerType) => {
-    const getLetter = () => {
-        return letter;
-    }
-    const getCurrentlyPlaying = () => {
-        return currentlyPlaying;
-    }
-    const updateCurrentlyPlaying = (isPlaying) => {
-        return currentlyPlaying = isPlaying;
-    }
-    const getPlayerType = () => {
-        return playerType;
-    }
-    const updatePlayerType = (type) => {
-        return playerType = type;
-    }
-    return {
-        getLetter,
-        getCurrentlyPlaying,
-        updateCurrentlyPlaying,
-        getPlayerType,
-        updatePlayerType
-    };
-})
-
-const computerMoves = (() => {
-    const availableMoves = () => {
-        const moves = [];
-        gameBoard.boardArray.filter((el, i) => {
-            if (el === null) {
-                moves.push(i);
-            }
-        })
-        const randomMove = moves[Math.floor(Math.random() * moves.length)];
-        return Object.freeze({moves, randomMove});
-    }
-    const computerMove = () => {
-        gameBoard.setComputerLetter(availableMoves().randomMove);
-    }
-    return { computerMove };
 })();
 
 const updateBoard = (() => {
@@ -230,7 +219,7 @@ const updateBoard = (() => {
             gameBoard.setCurrentPlayer();
             gameBoard.isComputerCurrentPlayer();
             underlinePlayer();
-            game.addEventListener('click', gameBoard.playGame);
+            gameTiles.forEach(el => el.addEventListener('click', gameBoard.playGame));
         }, 1000);
         window.setTimeout(() => gameScreen.classList.remove('show'), 2000);
     }
@@ -246,7 +235,7 @@ const updateBoard = (() => {
     const resultIsDraw = () => {
         gameTiles.forEach(el => {
             el.classList.add('draw-result');
-            game.removeEventListener('click', gameBoard.playGame);
+            el.removeEventListener('click', gameBoard.playGame);
             window.setTimeout(() => el.classList.remove('draw-result'), 1000);
         })
     }
@@ -254,7 +243,7 @@ const updateBoard = (() => {
         gameTiles.forEach(el => {
             if (fieldLetters.includes(Number(el.dataset.index))) {
                 el.classList.add('win-result');
-                game.removeEventListener('click', gameBoard.playGame);
+                el.removeEventListener('click', gameBoard.playGame);
                 window.setTimeout(() => el.classList.remove('win-result'), 1000);
             }
         })
@@ -270,17 +259,17 @@ const updateBoard = (() => {
         winnerCard.classList.remove('hide');
         winnerCard.classList.add('enter');
         restartBtn.addEventListener('click', restartGame);
-        //window.setTimeout(() => winnerCard.classList.remove('enter'), 1000);
+        // might be okay below: window.setTimeout(() => winnerCard.classList.remove('enter'), 1000);
     }
     const clearBoard = () => {
         gameScreen.classList.add('fade-out');
         window.setTimeout(() => {
             gameScreen.style.display = 'none';
             gameScreen.classList.remove('fade-out');
-        }, 1250);
+        }, 1000);
     }
     const restartGame = () => {
-        //restartBtn.removeEventListener('click', restartGame);
+        // needed?: restartBtn.removeEventListener('click', restartGame);
         winnerCard.classList.remove('enter');
         winnerCard.classList.add('exit');
         window.setTimeout(() => {
