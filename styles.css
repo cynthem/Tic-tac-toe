@@ -198,11 +198,12 @@ i:active {
 
 .player1,
 .player2 {
-    padding: 5px;
+    padding: 5px 10px;
 }
 
 .underline {
     border: 2px solid #FE5F55;
+    border-radius: 5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
